@@ -7,9 +7,14 @@ from antigrisha.config import Config
 app = Client('stop_grisha_gay', api_id=Config.API_ID, api_hash=Config.API_HASH)
 
 
-@app.on_message(filters=filters.photo)
+@app.on_message(filters=filters.photo & filters.sticker)
 async def censor(_: Client, message: Message):
-    file = await app.download_media(message.photo.file_id, in_memory=True)
+    if message.sticker is not None:
+        file_id = message.sticker.file_id
+    else:
+        file_id = message.photo.file_id
+
+    file = await app.download_media(file_id, in_memory=True)
 
     # noinspection PyUnresolvedReferences
     results = await run_moderation(bytes(file.getbuffer()))
