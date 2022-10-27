@@ -15,12 +15,12 @@ async def censor(_: Client, message: Message):
     results = await run_moderation(bytes(file.getbuffer()))
     print(f'Got img from {message.from_user.username}, results: {results}')
 
-    if results.adult > 0.7:
+    if results.adult > 0.1:
         await message.forward('me')
         await message.reply('Никакого гейства в чате!')
 
         await message.delete()
 
-    if results.gruesome > 0.7:
+    if results.gruesome > 0.4:
         await message.reply('Партия не гордится тобой!')
         await message.delete()
