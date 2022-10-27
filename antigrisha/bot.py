@@ -24,10 +24,10 @@ async def censor(_: Client, message: Message):
 
     if results.adult > 0.1:
         await message.forward('me')
-        await message.reply('Никакого гейства в чате!')
+        await message.reply(f'Никакого гейства в чате! Adult {round(results.adult, 4)}')
 
         await message.delete()
 
     if results.gruesome > 0.6:
-        await message.reply('Партия не гордится тобой!')
+        await message.reply(f'Партия не гордится тобой! Gruesome {round(results.gruesome, 4)}')
         await message.delete()
