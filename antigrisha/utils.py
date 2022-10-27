@@ -14,7 +14,7 @@ class TokenStorage:
 
     async def _update_iam(self):
         async with aiohttp.ClientSession() as session:
-            async with session.post(self.URL, json={"yandexPassportOauthToken": self._token}) as resp:
+            async with session.post(self.URL, json={'yandexPassportOauthToken': self._token}) as resp:
                 self._iam = (await resp.json())['iamToken']
                 self._last_updated = datetime.now().timestamp()
 

@@ -47,7 +47,6 @@ async def run_moderation(photo_bytes: bytes) -> ModerationResult:
             for r in results:
                 dict_results[r['name']] = r['probability']
 
-
             return ModerationResult(
                 adult=dict_results['adult'],
                 gruesome=dict_results['gruesome'],
