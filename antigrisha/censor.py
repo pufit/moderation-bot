@@ -3,7 +3,7 @@ import base64
 import typing
 
 from antigrisha.config import Config
-from antigrisha.utils import TokenStorage
+from antigrisha.utils import TokenStorage, img_to_png, tgs_to_png
 
 tokens = TokenStorage(token=Config.OAUTH_TOKEN)
 
@@ -17,10 +17,15 @@ class ModerationResult(typing.NamedTuple):
     watermarks: float
 
 
-async def run_moderation(photo_bytes: bytes) -> ModerationResult:
+async def run_moderation(photo_bytes: bytes, is_animated=False) -> ModerationResult:
     iam = await tokens.fetch()
 
-    data = base64.b64encode(photo_bytes)
+    if is_animated:
+        data_bytes = tgs_to_png(photo_bytes)
+    else:
+        data_bytes = img_to_png(photo_bytes)
+
+    data = base64.b64encode(img_to_png(data_bytes))
 
     async with aiohttp.ClientSession() as session:
         async with session.post(

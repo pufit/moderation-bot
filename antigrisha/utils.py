@@ -1,4 +1,7 @@
 import aiohttp
+import io
+
+from PIL import Image
 
 from datetime import datetime
 
@@ -23,3 +26,16 @@ class TokenStorage:
             await self._update_iam()
 
         return self._iam
+
+
+def img_to_png(data: bytes) -> bytes:
+    img = Image.open(io.BytesIO(data)).convert('RGB')
+
+    img_bytes = io.BytesIO()
+    img.save(img_bytes, format='png')
+
+    return img_bytes.getvalue()
+
+
+def tgs_to_png(data: bytes) -> bytes:
+    raise NotImplementedError()
