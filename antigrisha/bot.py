@@ -7,7 +7,7 @@ from antigrisha.config import Config
 app = Client('stop_grisha_gay', api_id=Config.API_ID, api_hash=Config.API_HASH)
 
 
-@app.on_message(filters=filters.photo & filters.sticker)
+@app.on_message(filters=filters.photo | filters.sticker)
 async def censor(_: Client, message: Message):
     if message.sticker is not None:
         file_id = message.sticker.file_id
