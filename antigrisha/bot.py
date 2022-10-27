@@ -28,6 +28,6 @@ async def censor(_: Client, message: Message):
 
         await message.delete()
 
-    if results.gruesome > 0.4:
+    if results.gruesome > 0.6:
         await message.reply('Партия не гордится тобой!')
         await message.delete()
